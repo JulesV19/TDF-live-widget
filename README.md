@@ -14,15 +14,13 @@ point reflète le nombre de coureurs, et l'icône le type de groupe (solo, petit
 Deux tailles, en style « liquid glass » (fond sombre, halo jaune) : distance restante en gros +
 la frise des écarts. Idéal pour jeter un œil sans ouvrir l'app.
 
-| Widget medium | Widget small |
-|---|---|
-| ![Widget medium](docs/widget-medium.png) | ![Widget small](docs/widget-small.png) |
+| Widget medium | Widget small | Vue live |
+|---|---|---|
+| <img src="docs/widget-medium.png" height="320" alt="Widget medium"> | <img src="docs/widget-small.png" height="320" alt="Widget small"> | <img src="docs/app-live.png" height="320" alt="Vue live de l'app"> |
 
 ### 📊 Vue live dans l'app
 Écran plein écran qui se met à jour **toutes les 10 s** : la distance, la frise, et le détail de
 chaque groupe (nom, nombre de coureurs, écart au leader). Les valeurs s'animent à chaque mise à jour.
-
-![Vue live de l'app](docs/app-live.png)
 
 ### ⚡ En direct
 - Distance restante jusqu'à l'arrivée (`km à parcourir`)
