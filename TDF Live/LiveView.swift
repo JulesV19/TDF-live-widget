@@ -2,9 +2,9 @@
 //  LiveView.swift
 //  TDF Live (app hôte)
 //
-//  Vue live plein écran : interroge le serveur toutes les 10 s (démo fiable,
-//  l'app au premier plan n'a pas le budget limité des widgets) et rafraîchit
-//  aussi le widget au passage.
+//  Vue live plein écran : interroge le serveur toutes les 60 s (calé sur la
+//  cadence du serveur, plus sobre pour la batterie) et rafraîchit aussi le
+//  widget au passage.
 //
 
 import SwiftUI
@@ -18,13 +18,35 @@ private enum L {
         if index == 0 { return yellow }
         return count == maxCount ? .white : blue
     }
-    static func icon(index: Int, count: Int) -> String {
-        if index == 0 { return "flag.checkered" }
-        if count <= 1 { return "person.fill" }
-        if count <= 8 { return "person.2.fill" }
-        return "person.3.fill"
+    /// Nombre de vélos selon la TAILLE du groupe (solo → 1, petit → 2, paquet → 3).
+    static func bikeCount(_ count: Int) -> Int {
+        if count <= 1 { return 1 }
+        if count <= 8 { return 2 }
+        return 3
     }
     static func markerSize(_ count: Int) -> CGFloat { min(26, max(12, 9 + sqrt(Double(count)) * 1.6)) }
+}
+
+/// Marqueur d'un groupe : drapeau pour la tête de course, sinon 1 à 3 vélos
+/// selon la taille du groupe.
+struct GroupIcon: View {
+    let isLeader: Bool
+    let count: Int
+    let size: CGFloat
+
+    var body: some View {
+        if isLeader {
+            Image(systemName: "flag.checkered")
+                .font(.system(size: size, weight: .bold))
+        } else {
+            HStack(spacing: 1.5) {
+                ForEach(0..<L.bikeCount(count), id: \.self) { _ in
+                    Image(systemName: "bicycle")
+                        .font(.system(size: size, weight: .bold))
+                }
+            }
+        }
+    }
 }
 
 struct LiveView: View {
@@ -32,7 +54,7 @@ struct LiveView: View {
     @State private var failed = false
     @State private var lastUpdate: Date?
 
-    private let interval: TimeInterval = 10
+    private let interval: TimeInterval = 60
 
     var body: some View {
         ZStack {
@@ -57,15 +79,17 @@ struct LiveView: View {
     @ViewBuilder private var content: some View {
         VStack(alignment: .leading, spacing: 20) {
             header
-            if let s = state, !s.groups.isEmpty {
+            if let s = state, s.live, !s.groups.isEmpty {
                 distance(s)
                 Frieze(groups: s.groups)
                     .frame(height: 90)
                     .padding(.vertical, 8)
                 groupList(s)
+            } else if let s = state, !s.live {
+                noStage
             } else if failed {
                 Spacer()
-                Label("Serveur injoignable\nLance ./run.sh --mock sur le Mac",
+                Label("Serveur injoignable\nLance ./run.sh sur le Mac",
                       systemImage: "wifi.exclamationmark")
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white.opacity(0.7))
@@ -82,11 +106,30 @@ struct LiveView: View {
         }
     }
 
+    // Aucune étape en direct : message clair plutôt qu'un spinner infini.
+    private var noStage: some View {
+        VStack(spacing: 12) {
+            Spacer()
+            Image(systemName: "flag.slash")
+                .font(.system(size: 40))
+                .foregroundStyle(L.yellow.opacity(0.85))
+            Text("Pas d'étape en cours")
+                .font(.title3.weight(.semibold))
+                .foregroundStyle(.white)
+            Text("Reviens pendant une étape du Tour")
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.55))
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .multilineTextAlignment(.center)
+    }
+
     private var header: some View {
         HStack {
             HStack(spacing: 6) {
                 Text("TDF").fontWeight(.heavy).foregroundStyle(L.yellow)
-                if let s = state?.stage {
+                if state?.live == true, let s = state?.stage {
                     Text("ÉTAPE \(s)").fontWeight(.semibold).foregroundStyle(.white.opacity(0.7))
                 }
             }
@@ -121,10 +164,9 @@ struct LiveView: View {
         return VStack(spacing: 10) {
             ForEach(Array(s.groups.enumerated()), id: \.element.id) { i, g in
                 HStack(spacing: 12) {
-                    Image(systemName: L.icon(index: i, count: g.count))
-                        .font(.subheadline)
+                    GroupIcon(isLeader: i == 0, count: g.count, size: 14)
                         .foregroundStyle(L.color(index: i, count: g.count, maxCount: maxCount))
-                        .frame(width: 22)
+                        .frame(width: 48, alignment: .leading)
                     Text(g.label).fontWeight(.medium).foregroundStyle(.white)
                     Text("\(g.count)").font(.footnote).foregroundStyle(.white.opacity(0.4))
                     Spacer()
@@ -198,19 +240,28 @@ private struct Frieze: View {
                     let color = L.color(index: i, count: g.count, maxCount: maxCount)
                     let up = (i % 2 == 0)
 
+                    // Bridage horizontal du label selon sa largeur (icônes empilées
+                    // sur l'écart) : 1 à 3 vélos ne débordent jamais du cadre.
+                    let bikes = i == 0 ? 1 : L.bikeCount(g.count)
+                    let iconsW = CGFloat(bikes) * 11 * 1.5 + CGFloat(bikes - 1) * 1.5
+                    let textW = CGFloat(g.gapText.count) * 13 * 0.62
+                    let labelHalfW = max(iconsW, textW) / 2
+                    let margin = labelHalfW + 4
+                    let labelX = margin * 2 >= w ? w / 2 : min(max(x, margin), w - margin)
+
                     Circle().fill(color).frame(width: d, height: d)
                         .overlay(Circle().strokeBorder(.white.opacity(0.85), lineWidth: 1.2))
                         .shadow(color: color.opacity(0.7), radius: 6)
                         .position(x: x, y: midY)
 
                     VStack(spacing: 2) {
-                        Image(systemName: L.icon(index: i, count: g.count)).font(.system(size: 11, weight: .bold))
+                        GroupIcon(isLeader: i == 0, count: g.count, size: 11)
                         Text(g.gapText).font(.system(size: 13, weight: .semibold, design: .rounded)).monospacedDigit()
                     }
                     .foregroundStyle(color)
                     .shadow(color: .black.opacity(0.4), radius: 2)
                     .fixedSize()
-                    .position(x: min(max(x, 26), w - 26), y: up ? midY - 30 : midY + 30)
+                    .position(x: labelX, y: up ? midY - 30 : midY + 30)
                 }
             }
         }

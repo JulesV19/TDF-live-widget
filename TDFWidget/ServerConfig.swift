@@ -8,10 +8,11 @@
 import Foundation
 
 enum ServerConfig {
-    /// IP réseau du Mac (Wi-Fi). Joignable depuis le simulateur ET l'iPhone
-    /// tant qu'ils sont sur le même Wi-Fi. Si l'IP du Mac change, mets-la à jour
-    /// (ou passe à une IP Tailscale, stable, plus tard).
-    static let baseURL = "http://192.168.1.6:8000"
+    /// Worker Cloudflare qui relaie le snapshot : joignable de PARTOUT (4G, autre
+    /// Wi-Fi…), en HTTPS, sans VPN. Remplace <ton-sous-domaine> par l'URL affichée
+    /// par `wrangler deploy` (voir cloudflare/README.md).
+    /// Repli réseau local : "http://192.168.1.6:8000"
+    static let baseURL = "https://tdf-live.juckles.workers.dev"
 
     static var currentURL: URL? { URL(string: baseURL + "/race/current") }
 }

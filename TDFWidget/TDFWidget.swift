@@ -51,15 +51,38 @@ private enum Style {
     static let inkSoft = Color.white.opacity(0.62)
     static let inkFaint = Color.white.opacity(0.35)
 
-    /// Icône selon la TAILLE du groupe (solo / petit groupe / gros paquet).
-    static func icon(forCount c: Int) -> String {
-        if c <= 1 { return "person.fill" }
-        if c <= 8 { return "person.2.fill" }
-        return "person.3.fill"
+    /// Nombre de vélos à afficher selon la TAILLE du groupe
+    /// (solo → 1, petit groupe → 2, gros paquet → 3).
+    static func bikeCount(forCount c: Int) -> Int {
+        if c <= 1 { return 1 }
+        if c <= 8 { return 2 }
+        return 3
     }
 
     static func markerSize(_ count: Int) -> CGFloat {
         min(16, max(9, 7 + sqrt(Double(count)) * 1.1))
+    }
+}
+
+/// Marqueur d'un groupe : drapeau pour la tête de course, sinon 1 à 3 vélos
+/// selon la taille du groupe.
+struct GroupIcon: View {
+    let isLeader: Bool
+    let count: Int
+    let size: CGFloat
+
+    var body: some View {
+        if isLeader {
+            Image(systemName: "flag.checkered")
+                .font(.system(size: size, weight: .bold))
+        } else {
+            HStack(spacing: 1) {
+                ForEach(0..<Style.bikeCount(forCount: count), id: \.self) { _ in
+                    Image(systemName: "bicycle")
+                        .font(.system(size: size, weight: .bold))
+                }
+            }
+        }
     }
 }
 
@@ -150,11 +173,19 @@ private struct GapAxis: View {
                     let isLeader = (i == 0)                     // groupe de tête (gap mini)
                     let color: Color = isLeader ? Style.yellow
                         : (g.count == maxCount ? .white : Style.blue)
-                    let icon = isLeader ? "flag.checkered" : Style.icon(forCount: g.count)
-                    // Décalage dynamique, BORNÉ au cadre : le texte ne sort jamais.
+                    // Décalage vertical dynamique, BORNÉ au cadre : le texte ne sort jamais.
                     let labelHalf = textSize / 2 + 4
                     let desired = d / 2 + clearance + textSize / 2
                     let offset = max(min(desired, midY - labelHalf - 1), 0)
+
+                    // Largeur estimée du label (icônes + écart) pour le brider
+                    // horizontalement : avec 1 à 3 vélos il ne doit jamais déborder.
+                    let bikes = isLeader ? 1 : Style.bikeCount(forCount: g.count)
+                    let iconsW = CGFloat(bikes) * iconSize * 1.5 + CGFloat(bikes - 1)
+                    let textW = CGFloat(g.gapText.count) * textSize * 0.62
+                    let labelHalfW = (iconsW + 3 + textW) / 2
+                    let margin = labelHalfW + 2
+                    let labelX = margin * 2 >= w ? w / 2 : min(max(x, margin), w - margin)
 
                     // Point sur la ligne
                     Circle()
@@ -166,8 +197,7 @@ private struct GapAxis: View {
 
                     // Indication : icône + écart, décollée du point
                     HStack(spacing: 3) {
-                        Image(systemName: icon)
-                            .font(.system(size: iconSize, weight: .bold))
+                        GroupIcon(isLeader: isLeader, count: g.count, size: iconSize)
                         Text(g.gapText)
                             .font(.system(size: textSize, weight: .semibold, design: .rounded))
                             .monospacedDigit()
@@ -175,7 +205,7 @@ private struct GapAxis: View {
                     .foregroundStyle(color)
                     .fixedSize()
                     .shadow(color: .black.opacity(0.4), radius: 2)
-                    .position(x: min(max(x, 24), w - 24),
+                    .position(x: labelX,
                               y: up ? midY - offset : midY + offset)
                 }
             }
