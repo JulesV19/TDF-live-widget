@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Xcode — données utilisateur / build
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Swift Package Manager
+.swiftpm/
+.build/
+
+# CocoaPods / Carthage (si utilisés un jour)
+Pods/
+Carthage/Build/

@@ -6,11 +6,62 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		AE1EDDA82FFEB6D700647026 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1EDDA72FFEB6D700647026 /* WidgetKit.framework */; };
+		AE1EDDAA2FFEB6D800647026 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE1EDDA92FFEB6D800647026 /* SwiftUI.framework */; };
+		AE1EDDB72FFEB6D900647026 /* TDFWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = AE1EDDA52FFEB6D700647026 /* TDFWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AE1EDDB52FFEB6D900647026 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AEB3D2502FFEAC9B0099C6C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AE1EDDA42FFEB6D700647026;
+			remoteInfo = TDFWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AE1EDDB82FFEB6D900647026 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AE1EDDB72FFEB6D900647026 /* TDFWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		AE1EDDA52FFEB6D700647026 /* TDFWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TDFWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE1EDDA72FFEB6D700647026 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		AE1EDDA92FFEB6D800647026 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		AEB3D2582FFEAC9B0099C6C1 /* TDF Live.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TDF Live.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AE1EDDBB2FFEB6D900647026 /* Exceptions for "TDFWidget" folder in "TDFWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AE1EDDA42FFEB6D700647026 /* TDFWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		AE1EDDAB2FFEB6D800647026 /* TDFWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AE1EDDBB2FFEB6D900647026 /* Exceptions for "TDFWidget" folder in "TDFWidgetExtension" target */,
+			);
+			path = TDFWidget;
+			sourceTree = "<group>";
+		};
 		AEB3D25A2FFEAC9B0099C6C1 /* TDF Live */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "TDF Live";
@@ -19,6 +70,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AE1EDDA22FFEB6D700647026 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AE1EDDAA2FFEB6D800647026 /* SwiftUI.framework in Frameworks */,
+				AE1EDDA82FFEB6D700647026 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEB3D2552FFEAC9B0099C6C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +89,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AE1EDDA62FFEB6D700647026 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AE1EDDA72FFEB6D700647026 /* WidgetKit.framework */,
+				AE1EDDA92FFEB6D800647026 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AEB3D24F2FFEAC9B0099C6C1 = {
 			isa = PBXGroup;
 			children = (
 				AEB3D25A2FFEAC9B0099C6C1 /* TDF Live */,
+				AE1EDDAB2FFEB6D800647026 /* TDFWidget */,
+				AE1EDDA62FFEB6D700647026 /* Frameworks */,
 				AEB3D2592FFEAC9B0099C6C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				AEB3D2582FFEAC9B0099C6C1 /* TDF Live.app */,
+				AE1EDDA52FFEB6D700647026 /* TDFWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +120,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AE1EDDA42FFEB6D700647026 /* TDFWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AE1EDDBC2FFEB6D900647026 /* Build configuration list for PBXNativeTarget "TDFWidgetExtension" */;
+			buildPhases = (
+				AE1EDDA12FFEB6D700647026 /* Sources */,
+				AE1EDDA22FFEB6D700647026 /* Frameworks */,
+				AE1EDDA32FFEB6D700647026 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AE1EDDAB2FFEB6D800647026 /* TDFWidget */,
+			);
+			name = TDFWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = TDFWidgetExtension;
+			productReference = AE1EDDA52FFEB6D700647026 /* TDFWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AEB3D2572FFEAC9B0099C6C1 /* TDF Live */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AEB3D2632FFEAC9C0099C6C1 /* Build configuration list for PBXNativeTarget "TDF Live" */;
@@ -55,10 +149,12 @@
 				AEB3D2542FFEAC9B0099C6C1 /* Sources */,
 				AEB3D2552FFEAC9B0099C6C1 /* Frameworks */,
 				AEB3D2562FFEAC9B0099C6C1 /* Resources */,
+				AE1EDDB82FFEB6D900647026 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AE1EDDB62FFEB6D900647026 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				AEB3D25A2FFEAC9B0099C6C1 /* TDF Live */,
@@ -80,6 +176,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					AE1EDDA42FFEB6D700647026 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					AEB3D2572FFEAC9B0099C6C1 = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -100,11 +199,19 @@
 			projectRoot = "";
 			targets = (
 				AEB3D2572FFEAC9B0099C6C1 /* TDF Live */,
+				AE1EDDA42FFEB6D700647026 /* TDFWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AE1EDDA32FFEB6D700647026 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEB3D2562FFEAC9B0099C6C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +222,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AE1EDDA12FFEB6D700647026 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AEB3D2542FFEAC9B0099C6C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +238,75 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AE1EDDB62FFEB6D900647026 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AE1EDDA42FFEB6D700647026 /* TDFWidgetExtension */;
+			targetProxy = AE1EDDB52FFEB6D900647026 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		AE1EDDB92FFEB6D900647026 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z8MU96PDC2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TDFWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TDFWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jules.TDF-Live.TDFWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AE1EDDBA2FFEB6D900647026 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z8MU96PDC2;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TDFWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TDFWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.jules.TDF-Live.TDFWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		AEB3D2612FFEAC9C0099C6C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -251,8 +433,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z8MU96PDC2;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Info-App.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,8 +466,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Z8MU96PDC2;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Info-App.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -309,6 +495,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AE1EDDBC2FFEB6D900647026 /* Build configuration list for PBXNativeTarget "TDFWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AE1EDDB92FFEB6D900647026 /* Debug */,
+				AE1EDDBA2FFEB6D900647026 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AEB3D2532FFEAC9B0099C6C1 /* Build configuration list for PBXProject "TDF Live" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
